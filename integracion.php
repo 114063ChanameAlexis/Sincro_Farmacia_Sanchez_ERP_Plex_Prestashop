@@ -150,7 +150,8 @@ $registrosSincronizados = 0;
 
 $fechaStock = flxfn::ultimaFechaSincro('MTO_STOCK', 0, false);
 $fechaStock = str_replace("-", "", substr($fechaStock, 0, 10));
-curl_setopt($ch, CURLOPT_URL, $url . "/ec_getstock?&idsucursal{3,21,29,24,5,11,14,16,18,19,22,23,25}&stockquantio=S");
+curl_setopt($ch, CURLOPT_URL, $url . "/ec_getstock?idsucursal=3,19,21,23");
+//curl_setopt($ch, CURLOPT_URL, $url . "/ec_getstock?&idsucursal{3,21,29,24,5,11,14,16,18,19,22,23,25}&stockquantio=S");
 $response_stock = json_decode(curl_exec($ch));
 
 if (!empty($response_stock->response->content->productos)) {
@@ -165,7 +166,7 @@ if (!empty($response_stock->response->content->productos)) {
 		if ($id_producto == 'NULL') {
 			continue;
 		}
-		$totalStock = $stock->stock_sucursales + $stock->stock_quantio;
+		$totalStock = $stock->stock_sucursales; //+ $stock->stock_quantio;
 
 		try {
 			StockAvailable::setQuantity($id_producto, 0, Tools::ceilf($totalStock));
