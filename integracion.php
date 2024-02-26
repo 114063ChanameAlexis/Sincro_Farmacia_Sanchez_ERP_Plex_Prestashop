@@ -29,6 +29,7 @@ $username = Parametros::get('user');
 $password = Parametros::get('password');
 $url      = Parametros::get('url');
 $estados  = Parametros::get('MS_ESTADOSPEDIDOS_' . Context::getContext()->shop->id);
+$depositos = Parametros::get('MS_DEPOSITOS_1');
 
 // Obtengo Fecha de Inicio
 $date 			  = new DateTime();
@@ -150,7 +151,7 @@ $registrosSincronizados = 0;
 
 $fechaStock = flxfn::ultimaFechaSincro('MTO_STOCK', 0, false);
 $fechaStock = str_replace("-", "", substr($fechaStock, 0, 10));
-curl_setopt($ch, CURLOPT_URL, $url . "/ec_getstock?idsucursal=3,19,21,23");
+curl_setopt($ch, CURLOPT_URL, $url . "/ec_getstock?idsucursal=".$depositos);
 //curl_setopt($ch, CURLOPT_URL, $url . "/ec_getstock?&idsucursal{3,21,29,24,5,11,14,16,18,19,22,23,25}&stockquantio=S");
 $response_stock = json_decode(curl_exec($ch));
 
